@@ -76,6 +76,41 @@ class BinaryTree(object):
 				hasSum = self.hasPathSum(node.left, sum-node.data) or self.hasPathSum(node.right, sum-node.data)
 				return hasSum
 
+	def printPaths(self):
+		if self.root == None:
+			print "The tree is empty"
+			return 
+		else:
+			self._printPaths(self.root, [])
+	def _printPaths(self, node, currentPath):
+		if node == None:
+			return
+		if node.left == None and node.right == None:
+			currentPath.append(node.data)
+			print currentPath
+			return
+		else:
+			currentPath.append(node.data)
+			self._printPaths(node.left, currentPath)
+			currentPath.pop()
+			self._printPaths(node.right, currentPath)
+			currentPath.pop()
+
+	def hasPathSum2(self, node, sum):
+		if self.root == None:
+			print "Tree is empty"
+			return True if sum == None else False
+		else:
+			_hasPathSum2(self.root, sum)
+	def _hasPathSum2(node, sum):
+		if node == None:
+			return True if sum == 0 else False
+		else:
+			left_result = self.hasPathSum2(node.left, sum-node.data) 
+			right_result = self.hasPathSum2(node.right, sum-node.data) 
+			return left_result or right_result
+
+
 def sameTree(node_a, node_b):
 	if node_a == None and node_b == None:
 		return True
@@ -86,31 +121,43 @@ def sameTree(node_a, node_b):
 	else: 
 		return False
 
-
-
-
-
-
-
-
-
 class TreeNode(object):
 	def __init__(self, data):
 		self.data = data
 		self.right = None
 		self.left = None
+	
 	def __str__(self):
-		 return("The node, its right and left are: "+str([self.data, self.right,self.left]))
+		 return "Current node:{} right node:{} left node:{}".format([self.data, self.right,self.left])
 
 
 if __name__ == "__main__":
 	a = BinaryTree()
+	#BinaryTree.add_node_to_tree(a, 10)
 	a.add_node_to_tree(10)
 	a.add_node_to_tree(20)
 	a.add_node_to_tree(30)
-	a.add_node_to_tree(10)
-	a.add_node_to_tree(20)
-	a.add_node_to_tree(10)
+	a.add_node_to_tree(40)
+	a.add_node_to_tree(50)
+	a.add_node_to_tree(60)
+	a.add_node_to_tree(70)
+	a.add_node_to_tree(80)
+	a.add_node_to_tree(90)
+	a.add_node_to_tree(100)
+	a.add_node_to_tree(110)
+	a.add_node_to_tree(120)
+	a.add_node_to_tree(130)
+	a.add_node_to_tree(140)
+	a.add_node_to_tree(150)
+	a.add_node_to_tree(160)
+	a.add_node_to_tree(170)
+	a.add_node_to_tree(180)
+	a.add_node_to_tree(190)
+	a.print_level_order()
+	a.printPaths()
+	print a.hasPathSum(a.root,0)
+
+	'''
 	b = BinaryTree()
 	b.add_node_to_tree(10)
 	b.add_node_to_tree(20)
@@ -119,7 +166,6 @@ if __name__ == "__main__":
 	b.add_node_to_tree(20)
 	b.add_node_to_tree(10)
 	b.add_node_to_tree(10)
-
 
 	a.add_node_to_tree(30)
 	a.add_node_to_tree(10)
@@ -154,6 +200,8 @@ if __name__ == "__main__":
 	a.height_of_tree(a.root,0)
 	hasSum = a.hasPathSum(a.root,50)
 	print sameTree(a.root,b.root)
+	'''
+
 	#print hasSum
 	#print HEIGHT
 
