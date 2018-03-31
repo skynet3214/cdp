@@ -1,6 +1,16 @@
 from queue import Queue
 #The aim is to create other types of trees and use python class concepts to inherit and blah blah
 HEIGHT = 0
+
+class TreeNode(object):
+	def __init__(self, data):
+		self.data = data
+		self.right = None
+		self.left = None
+	
+	def __str__(self):
+		 return "node:{} ".format(self.data)
+
 class BinaryTree(object):
 	def __init__(self):
 		self.root = None
@@ -43,13 +53,16 @@ class BinaryTree(object):
 			while not current_q.IsQueueEmpty() or not other_q.IsQueueEmpty():
 				while not current_q.IsQueueEmpty():
 					node = current_q.dequeue()
+					
 					print node.data,
 					if node.left != None:
 						other_q.enqueue([node.left])
 					if node.right != None:
 						other_q.enqueue([node.right])
 				print "\n"
+				
 				other_q, current_q = current_q, other_q
+		
 	
 	def height_of_tree(self, node, height):
 		if self.root == None:
@@ -96,19 +109,30 @@ class BinaryTree(object):
 			self._printPaths(node.right, currentPath)
 			currentPath.pop()
 
-	def hasPathSum2(self, node, sum):
+	def isBST(self):
 		if self.root == None:
-			print "Tree is empty"
-			return True if sum == None else False
+			return True
 		else:
-			_hasPathSum2(self.root, sum)
-	def _hasPathSum2(node, sum):
-		if node == None:
-			return True if sum == 0 else False
+			return self._isBST(self.root)
+
+	def _isBST(self, node):
+		if node is not None:
+			if self.__isBST(node.left, node.data, 0) and self.__isBST(node.right, node.data, 1):
+				return self._isBST(node.left) and self._isBST(node.right)
+			else:
+				return False
+		return True
+
+	def __isBST(self, node, data):
+		if node is None:
+			return True
 		else:
-			left_result = self.hasPathSum2(node.left, sum-node.data) 
-			right_result = self.hasPathSum2(node.right, sum-node.data) 
-			return left_result or right_result
+			if node.data > data and mode == 0:
+				return False 
+			elif node.data < data and mode == 1:
+				return False
+			else:
+				return self.__isBST(node.left, data, mode) and self.__isBST(node.right, data, mode)
 
 
 def sameTree(node_a, node_b):
@@ -121,29 +145,81 @@ def sameTree(node_a, node_b):
 	else: 
 		return False
 
-class TreeNode(object):
-	def __init__(self, data):
-		self.data = data
-		self.right = None
-		self.left = None
+def mergeTree(c, node_c, node_a, node_b):
+	if node_c is c.root:
+		if node_a == None and node_b == None:
+			return 
+		if node_a != None and node_b != None:
+			c.root =  TreeNode(node_a.data + node_b.data)
+			print "root ids:{}  {}".format(id(c.root.left), id(c.root.right))
+			mergeTree(c,c.root.left, node_a.left, node_b.left)
+			mergeTree(c,c.root.right, node_a.right, node_b.right)
+		elif node_a == None and node_b != None:
+			c.root =  TreeNode(node_b.data)
+			mergeTree(c,c.root.left, None, node_b.left)
+			mergeTree(c,c.root.right, None, node_b.right)
+		elif node_a != None and node_b == None:
+			c.root =  TreeNode(node_a.data)
+			mergeTree(c,c.root.left, node_a.left, None)
+			mergeTree(c,c.root.right, node_a.right, None)
+	else:
+		if node_a == None and node_b == None:
+			return 
+		else:
+			if node_a != None and node_b != None:
+				
+				node_c =  TreeNode(node_a.data + node_b.data)
+				print id(node_c)
+				mergeTree(c,node_c.left, node_a.left, node_b.left)
+				mergeTree(c,node_c.right, node_a.right, node_b.right)
+			elif node_a == None and node_b != None:
+				node_c =  TreeNode(node_b.data)
+				mergeTree(c,node_c.left, None, node_b.left)
+				mergeTree(c,node_c.right, None, node_b.right)
+			elif node_a != None and node_b == None:
+				node_c =  TreeNode(node_a.data)
+				mergeTree(c,node_c.left, node_a.left, None)
+				mergeTree(c,node_c.right, node_a.right, None)
 	
-	def __str__(self):
-		 return "Current node:{} right node:{} left node:{}".format([self.data, self.right,self.left])
+
+
+	
+
+
+def mergeTreeNode(node_a, node_b):
+	if node_a == None and node_b == None:
+		return None
+	elif node_a != None and node_b != None:
+		return TreeNode(node_a.data + node_b.data)
+		#node is still unconnected
+	elif node_a == None and node_b != None:
+		return TreeNode(node_b.data)
+	elif node_a != None and node_b == None:
+		return TreeNode(node_a.data)
+
+
 
 
 if __name__ == "__main__":
 	a = BinaryTree()
 	#BinaryTree.add_node_to_tree(a, 10)
-	a.add_node_to_tree(10)
+	
 	a.add_node_to_tree(20)
+	a.add_node_to_tree(10)
 	a.add_node_to_tree(30)
-	a.add_node_to_tree(40)
+	
+	print "a  :{}".format('--'*20)
+	a.print_level_order()
+	
+	'''
+	a.add_node_to_tree(30)
+	a.add_node_to_tree(4)
 	a.add_node_to_tree(50)
-	a.add_node_to_tree(60)
 	a.add_node_to_tree(70)
 	a.add_node_to_tree(80)
 	a.add_node_to_tree(90)
 	a.add_node_to_tree(100)
+	
 	a.add_node_to_tree(110)
 	a.add_node_to_tree(120)
 	a.add_node_to_tree(130)
@@ -153,20 +229,34 @@ if __name__ == "__main__":
 	a.add_node_to_tree(170)
 	a.add_node_to_tree(180)
 	a.add_node_to_tree(190)
-	a.print_level_order()
-	a.printPaths()
-	print a.hasPathSum(a.root,0)
-
 	'''
+	
+
+	#print a.isBST()
+	#a.printPaths()
+
+	#print a
+	
+	#print a.hasPathSum(a.root,0)
+	
 	b = BinaryTree()
 	b.add_node_to_tree(10)
 	b.add_node_to_tree(20)
 	b.add_node_to_tree(30)
+	
+	b.add_node_to_tree(10)
+	print "b  :{}".format('--'*20)
+	b.print_level_order()
+	c = BinaryTree()
+	mergeTree(c,c.root, a.root, b.root)
+	print "c :{}".format('--'*20)
+	c.print_level_order()
+	
+	'''
+	b.add_node_to_tree(30)
 	b.add_node_to_tree(10)
 	b.add_node_to_tree(20)
 	b.add_node_to_tree(10)
-	b.add_node_to_tree(10)
-
 	a.add_node_to_tree(30)
 	a.add_node_to_tree(10)
 	a.add_node_to_tree(20)
