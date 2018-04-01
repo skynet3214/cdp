@@ -15,7 +15,7 @@ def combinationSum(candidates, target,index, results, level):
 		#del results[:]
 		return
 	else:
-		for i in xrange(index, len(candidates)):
+		for i in range(index, len(candidates)):
 			combinationSum(candidates, target-candidates[i],i, results+[candidates[i]],level)
 		#for num in candidates:   
 		#	combinationSum(candidates, target-num, results+[num],level)
