@@ -145,43 +145,35 @@ def sameTree(node_a, node_b):
 	else: 
 		return False
 
-def mergeTree(c, node_c, node_a, node_b):
-	if node_c is c.root:
-		if node_a == None and node_b == None:
-			return 
-		if node_a != None and node_b != None:
-			c.root =  TreeNode(node_a.data + node_b.data)
-			print "root ids:{}  {}".format(id(c.root.left), id(c.root.right))
-			mergeTree(c,c.root.left, node_a.left, node_b.left)
-			mergeTree(c,c.root.right, node_a.right, node_b.right)
-		elif node_a == None and node_b != None:
-			c.root =  TreeNode(node_b.data)
-			mergeTree(c,c.root.left, None, node_b.left)
-			mergeTree(c,c.root.right, None, node_b.right)
-		elif node_a != None and node_b == None:
-			c.root =  TreeNode(node_a.data)
-			mergeTree(c,c.root.left, node_a.left, None)
-			mergeTree(c,c.root.right, node_a.right, None)
-	else:
-		if node_a == None and node_b == None:
-			return 
-		else:
-			if node_a != None and node_b != None:
-				
-				node_c =  TreeNode(node_a.data + node_b.data)
-				print id(node_c)
-				mergeTree(c,node_c.left, node_a.left, node_b.left)
-				mergeTree(c,node_c.right, node_a.right, node_b.right)
-			elif node_a == None and node_b != None:
-				node_c =  TreeNode(node_b.data)
-				mergeTree(c,node_c.left, None, node_b.left)
-				mergeTree(c,node_c.right, None, node_b.right)
-			elif node_a != None and node_b == None:
-				node_c =  TreeNode(node_a.data)
-				mergeTree(c,node_c.left, node_a.left, None)
-				mergeTree(c,node_c.right, node_a.right, None)
-	
+def mergeTree(node_a, node_b):
+	c.root = _mergeTree(node_a, node_b)
+	return c.root
 
+	
+def _mergeTree(node_a, node_b):
+	if node_a == None and node_b == None:
+		return 
+	else:
+		if node_a != None and node_b != None:
+			node_c =  TreeNode(node_a.data + node_b.data)
+			node_c.left = _mergeTree(node_a.left, node_b.left)
+			node_c.right = _mergeTree(node_a.right, node_b.right)
+			return node_c
+		elif node_a == None and node_b != None:
+			#node_c =  TreeNode(node_b.data)
+			#node_c.left = _mergeTree(None, node_b.left)
+			#node_c.right = _mergeTree(None, node_b.right)
+			return TreeNode(node_b.data)
+		elif node_a != None and node_b == None:
+			#node_c =  TreeNode(node_a.data)
+			#node_c.left = _mergeTree(node_a.left, None)
+			#node_c.right = _mergeTree(node_a.right, None)
+			return TreeNode(node_a.data)
+
+
+#Assume both the roots are not none
+
+	
 
 	
 
@@ -196,7 +188,17 @@ def mergeTreeNode(node_a, node_b):
 		return TreeNode(node_b.data)
 	elif node_a != None and node_b == None:
 		return TreeNode(node_a.data)
-
+'''
+def mergeTrees(t1, t2):
+	if t1 and t2:
+	    root = TreeNode(t1.data + t2.data)
+	    root.left = mergeTrees(t1.left, t2.left)
+	    root.right = mergeTrees(t1.right, t2.right)
+	    return root
+	else:
+	    return t1 or t2
+'''
+		        
 
 
 
@@ -248,8 +250,9 @@ if __name__ == "__main__":
 	print "b  :{}".format('--'*20)
 	b.print_level_order()
 	c = BinaryTree()
-	mergeTree(c,c.root, a.root, b.root)
+	c.root = mergeTree(a.root, b.root)
 	print "c :{}".format('--'*20)
+	print "c_root_id :{}".format(id(c.root))
 	c.print_level_order()
 	
 	'''
