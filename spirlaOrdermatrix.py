@@ -24,11 +24,18 @@ class Solution(object):
     			for i in range(left, right+1):
     				results.append(matrix[top][i])
     				elements+=1
-    			#print len(results),results
+    			print len(results),results
+    			return results
+    		if left == right:
+    			for i in range(top, bottom+1):
+    				results.append(matrix[i][left])
+    				elements+=1
+    			print len(results),results
     			return results
 
 
-    		
+
+
     		for j in range(left, right):
     			print "(top,j):({},{})".format(top,j)
     			results.append(matrix[top][j])
@@ -77,11 +84,12 @@ class Solution(object):
 
 1 2 3 4 8 12 16 15 14 13 9 5 6 7 11 10
 '''
-
-matrix = [[1,2,3,4],[5,6,7,8],[9,10,11,12],[13,14,15,16]]
+#matrix = [[7],[9],[6]]
+#matrix = [[7,6,8]]
+#matrix = [[1,2,3,4],[5,6,7,8],[9,10,11,12],[13,14,15,16]]
 #matrix = [[1,2,3,4],[5,6,7,8],[9,10,11,12]]
 #matrix = [[1,2,3,4,20],[5,6,7,8,21],[9,10,11,12,22]]
 #matrix = [[1,2,3],[4,5,6]]
-#matrix = [[1,2,3],[4,5,6],[7,8,9]]
+matrix = [[1,2,3],[4,5,6],[7,8,9]]
 #matrix = [[1,1],[2,3,4]]
 Solution().spiralOrder(matrix)
