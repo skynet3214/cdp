@@ -26,15 +26,13 @@ class Solution(object):
     				elements+=1
     			print len(results),results
     			return results
+    		
     		if left == right:
     			for i in range(top, bottom+1):
     				results.append(matrix[i][left])
     				elements+=1
     			print len(results),results
     			return results
-
-
-
 
     		for j in range(left, right):
     			print "(top,j):({},{})".format(top,j)
@@ -62,8 +60,6 @@ class Solution(object):
     		left+=1
     		top+=1
     		bottom-=1
-    		#j = left
-    		#elements+=1
     		print "elements:{}".format(elements)
     		print "right:{}".format(right)
     		print "left:{}".format(left)

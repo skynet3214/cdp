@@ -1,4 +1,4 @@
-
+'''
 class Solution(object):
     def letterCombinations(self, digits):
         def generateLetterCombinations(word_list, combinations):
@@ -22,29 +22,20 @@ class Solution(object):
         all_word_combinations = generateLetterCombinations(word_letter_list, [])
         return all_word_combinations
 
-
-    
+'''
 def generateLetterCombinations(word_list, combinations):
     if not word_list:
-        print "here"
         return combinations
     else:
-        print "hee"
-        print word_list
         new_combinations = []
-        
         if not combinations:
             new_combinations = [letter for letter in word_list[0]]
-        
         for letter_w in word_list[0]:
             for letter_s in combinations:
                 new_combinations.append(letter_s+letter_w)
-        
-        print ":new_combinations:{}".format(new_combinations)
         del word_list[0]
-        print ":word_list after del:{}".format(word_list) 
-        print "new_combinations:{}".format(new_combinations) 
         final = generateLetterCombinations(word_list, new_combinations)
+    
     return final
 
 
