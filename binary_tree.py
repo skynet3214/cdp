@@ -1,6 +1,6 @@
 from queue import Queue
 #The aim is to create other types of trees and use python class concepts to inherit and blah blah
-HEIGHT = 0
+
 
 class TreeNode(object):
 	def __init__(self, data):
@@ -15,6 +15,7 @@ class BinaryTree(object):
 	def __init__(self):
 		self.root = None
 		self.no_of_nodes = 0 
+		self.height = 0 
 
 	def add_node_to_tree(self, data):       #if given a list, how to add all the elements in the list
 		if self.root == None:
@@ -66,17 +67,17 @@ class BinaryTree(object):
 	
 	def height_of_tree(self, node, height):
 		if self.root == None:
-			return 0
+			self.height = 0 
 		else:
-			global HEIGHT
-			if node == None:
-				if height > HEIGHT:
-					HEIGHT = height
-				return
-			else:
+			if node:
 				height+=1
 				self.height_of_tree(node.left, height)
 				self.height_of_tree(node.right, height)
+			else:
+				if height > self.height:
+					self.height = height
+				return
+
 
 	def hasPathSum(self, node, sum):
 		if self.root == None:
