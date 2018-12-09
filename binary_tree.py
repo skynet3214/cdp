@@ -175,7 +175,33 @@ def _mergeTree(node_a, node_b):
 #Assume both the roots are not none
 
 	
-
+class Solution(object):
+    def isValidBST(self, root):
+        """
+        :type root: TreeNode
+        :rtype: bool
+        """
+        INT_MAX = 4294967296
+        INT_MIN = -4294967296
+        return (isBSTUtil(root, INT_MIN, INT_MAX)) 
+  
+# Retusn true if the given tree is a BST and its values 
+# >= min and <= max 
+def isBSTUtil(node, mini, maxi): 
+      
+    # An empty tree is BST 
+    if node is None: 
+        return True
+  
+    # False if this node violates min/max constraint 
+    if node.val < mini or node.val > maxi: 
+        return False
+  
+    # Otherwise check the subtrees recursively 
+    # tightening the min or max constraint 
+    return (isBSTUtil(node.left, mini, node.val -1) and
+          isBSTUtil(node.right, node.val+1, maxi)) 
+  
 	
 
 
@@ -199,7 +225,25 @@ def mergeTrees(t1, t2):
 	else:
 	    return t1 or t2
 '''
-		        
+
+def count_nodes(node):
+	if node is None:
+		return 0
+	if node.left is None and node.right is None:
+		return 1 
+	else:
+		return count_nodes(node.left) + count_nodes(node.right) + 1
+
+def height_of_tree(node):
+	if node is None:
+		return 0
+	if node.left is None and node.right is None:
+		return 1
+	else:
+		left_h = height_of_tree(node.left)
+		right_h = height_of_tree(node.right)
+
+		return left_h+1 if left_h>=right_h else right_h+1
 
 
 
@@ -210,9 +254,20 @@ if __name__ == "__main__":
 	a.add_node_to_tree(20)
 	a.add_node_to_tree(10)
 	a.add_node_to_tree(30)
+	a.add_node_to_tree(30)
+	a.add_node_to_tree(30)
+	a.add_node_to_tree(30)
+	a.add_node_to_tree(30)
+	a.add_node_to_tree(30)
+	
+	
 	
 	print "a  :{}".format('--'*20)
 	a.print_level_order()
+	print "No of nodes is: {}".format(count_nodes(a.root))
+	print "height is: {}".format(height_of_tree(a.root))
+	
+
 	
 	'''
 	a.add_node_to_tree(30)
@@ -241,7 +296,7 @@ if __name__ == "__main__":
 	#print a
 	
 	#print a.hasPathSum(a.root,0)
-	
+	'''
 	b = BinaryTree()
 	b.add_node_to_tree(10)
 	b.add_node_to_tree(20)
@@ -255,6 +310,8 @@ if __name__ == "__main__":
 	print "c :{}".format('--'*20)
 	print "c_root_id :{}".format(id(c.root))
 	c.print_level_order()
+	'''
+
 	
 	'''
 	b.add_node_to_tree(30)
